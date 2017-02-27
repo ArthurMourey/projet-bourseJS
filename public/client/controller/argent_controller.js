@@ -1,7 +1,12 @@
-angular.module('shop').controller('Argent',['$scope', '$http', function($scope, $http) {
+angular.module('shop').controller('ArgentController',['$scope', '$http', 'Argent', 'ListeArgent', function($scope, $http, Argent, ListeArgent) {
 
     $http.get('http://localhost:3000/argent').then(function(response){
-        $scope.argent = response.data.last();
+        $scope.listeArgent = [];
+        response.data.forEach(function(data) {
+            var newArgent = new Argent(data);
+            ListeArgent.push(newArgent);
+            $scope.listeArgent = ListeArgent;
+        });
     }, function(error){
       console.log(error);
     });

@@ -6,6 +6,7 @@ angular.module('shop').controller('PortefeuilleController',['$scope', '$http', '
             Portefeuille.push(newProduct);
             $scope.portefeuille = Portefeuille;
         });
+        console.log(Portefeuille);
     }, function(error){
       console.log(error);
     });

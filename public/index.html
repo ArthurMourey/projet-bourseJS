@@ -23,6 +23,7 @@
 	<!-- import controller -->
 	<script type="text/javascript" src="client/controller/products_controller.js"></script>
 	<script type="text/javascript" src="client/controller/portefeuille_controller.js"></script>
+    <script type="text/javascript" src="client/controller/argent_controller.js"></script>
 
 	<!-- import directive -->
 	<script type="text/javascript" src="client/directive/product_directive.js"></script>
@@ -31,6 +32,8 @@
 	<!-- import model -->
 	<script type="text/javascript" src="client/model/product.js"></script>
 	<script type="text/javascript" src="client/model/portefeuille.js"></script>
+    <script type="text/javascript" src="client/model/argent.js"></script>
+    <script type="text/javascript" src="client/model/listeArgent.js"></script>
 	
 </head>
 <body>
@@ -113,8 +116,8 @@
 			               </table>
 		                </div>
 			</div>
-			<div id="downRight" class="col-md-6">
-				<h2 id="total">Vous avez actuellement 1000$</h2>
+			<div id="downRight" ng-controller="ArgentController" class="col-md-6">
+				<h2 id="total">Vous avez actuellement {{argents[argents.length-1].somme | number:2}}$</h2>
 			</div>
 		</div>
 	</div>
