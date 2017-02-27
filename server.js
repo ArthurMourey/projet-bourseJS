@@ -73,9 +73,17 @@ app.route('/portefeuille').post(function(req, response, next){
 	})
 })
 .delete(function(req, response, next){
-	Stock.find
+    var stock = new Stock(req.body);
+    stock.remove(function(erreur){
+        if(erreur){
+            return next(erreur);
+        } else {
+            console.log(response.json(stock));
+        }
+    })
 });
 
+//TODO : LA FONCTION DELETE AU DESSUS
 
 app.listen(3000);
 console.log('Server is running...');

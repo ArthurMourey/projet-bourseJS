@@ -7,6 +7,7 @@ angular.module('shop').controller('ProductsController',['$scope', '$http', 'Prod
     $scope.search = function() {
         $http.get('http://localhost:3000/stocks?symbol='+ $scope.searchText).then(function(response) {
         var newProduct = new Product(response.data.query.results.quote);
+        console.log(response.data.query.results.quote);
         if($scope.init === false){
           if(newProduct.name != null){
             $scope.products.push(newProduct);

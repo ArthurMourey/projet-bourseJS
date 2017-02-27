@@ -9,11 +9,16 @@ angular.module('shop').factory('Product',
       }
 
       this.symbol = data.symbol;
-      if(typeof data.ask === 'undefined'){
-        this.ask = "";
+      if(typeof data.price === 'undefined'){
+          if(typeof data.Ask != 'undefined' && data.Ask != null) {
+              this.ask = data.Ask + "$";
+          }
+          else{
+              this.ask = "";
+          }
       }
       else{
-        this.ask = data.Ask+"$";
+        this.ask = data.price+"$";
       }
     }
     

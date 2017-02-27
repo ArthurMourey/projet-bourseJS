@@ -100,15 +100,8 @@
 		<div class="row" ng-controller="PortefeuilleController">
 			<div id="downLeft" class="col-md-6">
 			<h2>Votre portefeuille</h2>
-	               <!--<table class="table table-hover">
-	               		<tr portefeuille ng-repeat="action in portefeuille">
-	               			<tr portefeuille ng-repeat="action in portefeuille">{{action.name}}</tr>
-	               			<div class="col-md-10">[{{action.symbol}}] {{action.name}} {{action.ask}}</div>
-					        <button ng-click="product.sold()" type="button" class="btn btn-default">Vendre</button>
-	               		</tr>
-	               </table>-->
 	               <div class="table tablescroll">
-			                <table id="searchTextResults" class="table table-hover">
+			                <table id="portefeuilleAction" class="table table-hover">
 				               	<tr ng-repeat="product in portefeuille | orderBy:'-'">
 				               		<td>
 				               			<div class="row">
