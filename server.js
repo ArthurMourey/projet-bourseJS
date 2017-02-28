@@ -45,7 +45,7 @@ app.route('/stocks').get(function(req, response, next){
 			}
 		}
 		else{
-			next();
+			next(error);
 		}
 	});
 })
@@ -60,15 +60,49 @@ app.route('/stocks').get(function(req, response, next){
 	})
 });
 
-app.route('/portefeuille*').post(function(req, response, next){
-	var stock = new Stock(req.body);
-	stock.save(function(erreur){
-		if(erreur){
-			return next(erreur);
-		} else {
-			response.json(stock);
-		}
-	})
+app.route('/portefeuille*').post(function(req, response, next) {
+    var stock = new Stock(req.body);
+    console.log(req.body);
+    stock.save(function (erreur) {
+        if (erreur) {
+            return next(erreur);
+        } else {
+            var url = "https://query.yahooapis.com/v1/public/yql?q=env%20'store%3A%2F%2Fdatatables.org%2Falltableswithkeys'%3B%20";
+            var data = encodeURIComponent('select * from yahoo.finance.quotes where symbol = "' + stock.symbol + '"');
+            var url2 = url + data + "&env=http%3A%2F%2Fdatatables.org%2Falltables.env&format=json";
+
+            request.get(url2, function (error, res, body) {
+                if (!error && res.statusCode == 200) {
+                    Argent.find({}, function (error, argents) {
+                        if (error) {
+                            console.log(error);
+                        }
+                        var dernierSomme = Number(argents[argents.length - 1].somme);
+                        var nouvelleSomme = dernierSomme - Number(JSON.parse(body).query.results.quote.Ask);
+
+                        console.log("dernierSomme : " + dernierSomme);
+                        console.log("Ask : " + Number(JSON.parse(body).query.results.quote.Ask));
+
+
+                        var newArgent = new Argent({somme: nouvelleSomme});
+                        newArgent.save(function (err) {
+                            if (err) {
+                                return next(err);
+                            }
+                            console.log("newArgent "+ newArgent);
+                            stock.ask = Number(JSON.parse(body).query.results.quote.Ask);
+                            console.log(stock);
+                            var stockk = stock.toObject();
+                            stockk.Ask = Number(JSON.parse(body).query.results.quote.Ask);
+                            console.log(stockk);
+                            response.json(stockk);
+                        })
+
+                    }).sort({date: 1})
+                }
+            })
+        }
+    })
 })
 .get(function(req, response, next){
 	Stock.find({}, function(erreur, stocks){
@@ -101,8 +135,8 @@ app.route('/portefeuille*').post(function(req, response, next){
 					var dernierSomme = Number(argents[argents.length-1].somme);
                 	var nouvelleSomme = dernierSomme + Number(JSON.parse(body).query.results.quote.Ask);
 
-                    console.log("ANUS : "+dernierSomme);
-                    console.log("PENIS : "+Number(JSON.parse(body).query.results.quote.Ask));
+                    console.log("dernierSomme : "+dernierSomme);
+                    console.log("Ask : "+Number(JSON.parse(body).query.results.quote.Ask));
 
 
                 	var newArgent = new Argent({somme: nouvelleSomme});
@@ -115,6 +149,7 @@ app.route('/portefeuille*').post(function(req, response, next){
 					})
 
 				}).sort({date:1})
+				Stock.remove({_id:id}, function(error,removed){});
             }
             else{
                 next(error);

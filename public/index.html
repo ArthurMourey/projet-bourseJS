@@ -73,8 +73,10 @@
 				</div>
 			</div>
 
-			<div id="upRight" class="col-md-6">
+			<div id="upRight" ng-controller="ArgentController" class="col-md-6">
 				<h2>Fluctuations</h2>
+                {{listeArgent}}
+                {{listeArgent[listeArgent.length-1].somme | number:2}}
 				<div id="chart"></div>
 				<script>
 					new Morris.Line({
@@ -108,7 +110,7 @@
 				               	<tr ng-repeat="product in portefeuille | orderBy:'-'">
 				               		<td>
 				               			<div class="row">
-					               			<div class="col-md-10">[{{product.symbol}}] {{product.name}} {{product.ask}}</div>
+					               			<div class="col-md-10">[{{product.symbol}}] {{product.name}} {{product.ask}}$</div>
 					               			<button ng-click="product.sold()" type="button" class="btn btn-default">Vendre</button>
 				               			</div>
 				               		</td>
@@ -117,7 +119,7 @@
 		                </div>
 			</div>
 			<div id="downRight" ng-controller="ArgentController" class="col-md-6">
-				<h2 id="total">Vous avez actuellement {{argents[argents.length-1].somme | number:2}}$</h2>
+				<h2 id="total">Vous avez actuellement {{listeArgent[listeArgent.length-1].somme | number:2}}$</h2>
 			</div>
 		</div>
 	</div>
