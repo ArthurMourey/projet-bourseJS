@@ -1,5 +1,5 @@
 angular.module('shop').factory('Product', 
-  ['$http','Argent', 'Portefeuille', 'ListeArgent', function($http, Argent, Portefeuille, ListeArgent) {
+  ['$http', 'Argent', 'Portefeuille', 'ListeArgent', function($http, Argent, Portefeuille, ListeArgent) {
     var Product = function(data) {
 
       this.id = data._id;
@@ -33,6 +33,30 @@ angular.module('shop').factory('Product',
         Portefeuille.push(newProduct);
         ListeArgent.push(new Argent({date: new Date(), somme: ListeArgent[ListeArgent.length - 1].somme - newProduct.ask}));
         console.log(Portefeuille);
+
+
+          var dateCol = ['Date'];
+          var sommeCol = ['Somme'];
+
+
+          ListeArgent.forEach(function(data){
+              dateCol.push(data.date);
+              sommeCol.push(data.somme);
+          });
+
+          $('#chart').html = "";
+
+          dateCol.splice(dateCol.length - 1);
+          c3.generate({
+              bindto: '#chart',
+              data: {
+                  columns: [
+                      dateCol,
+                      sommeCol
+                  ]
+              }
+          });
+
       });
     }
 
@@ -54,6 +78,31 @@ angular.module('shop').factory('Product',
           }
           var newArgent = new Argent(response.data);
           ListeArgent.push(newArgent);
+
+
+              var dateCol = ['Date'];
+              var sommeCol = ['Somme'];
+
+
+              ListeArgent.forEach(function(data){
+                  dateCol.push(data.date);
+                  sommeCol.push(data.somme);
+              });
+
+              $('#chart').html = "";
+
+              dateCol.splice(dateCol.length - 1);
+              c3.generate({
+                  bindto: '#chart',
+                  data: {
+                      columns: [
+                          dateCol,
+                          sommeCol
+                      ]
+                  }
+              });
+
+
       });
     }
     

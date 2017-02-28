@@ -12,6 +12,13 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 
+    <!-- Load c3.css -->
+    <link href="client/c3/c3.css" rel="stylesheet" type="text/css">
+
+    <!-- Load d3.js and c3.js -->
+    <script src="https://d3js.org/d3.v3.js"></script>
+    <script type="text/javascript" src="client/c3/c3.min.js"></script>
+
 	<!-- import javascript -->
 	<script type="text/javascript" src="client/angular-1.6.1/angular.min.js"></script>
 	<script type="text/javascript" src="app.js"></script>
@@ -41,7 +48,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div id="upLeft" class="col-md-6">
-				<h2>Nom du site</h2>
+				<h2>Bourse</h2>
 					
 					  <div ng-controller="ProductsController">
 
@@ -75,48 +82,24 @@
 
 			<div id="upRight" ng-controller="ArgentController" class="col-md-6">
 				<h2>Fluctuations</h2>
-                {{listeArgent}}
-                {{listeArgent[listeArgent.length-1].somme | number:2}}
 				<div id="chart"></div>
-				<script>
-					new Morris.Line({
-						// ID of the element in which to draw the chart.
-						element: 'chart',
-						// Chart data records -- each entry in this array corresponds to a point on
-						// the chart.
-						data: [
-						{ year: '2008', value: 20 },
-						{ year: '2009', value: 10 },
-						{ year: '2010', value: 5 },
-						{ year: '2011', value: 5 },
-						{ year: '2012', value: 20 }
-						],
-						// The name of the data record attribute that contains x-values.
-						xkey: 'year',
-						// A list of names of data record attributes that contain y-values.
-						ykeys: ['value'],
-						// Labels for the ykeys -- will be displayed when you hover over the
-						// chart.
-						labels: ['Value']
-					});
-				</script>
 			</div>
 		</div>
 		<div class="row" ng-controller="PortefeuilleController">
 			<div id="downLeft" class="col-md-6">
 			<h2>Votre portefeuille</h2>
-	               <div class="table tablescroll">
-			                <table id="portefeuilleAction" class="table table-hover">
-				               	<tr ng-repeat="product in portefeuille | orderBy:'-'">
-				               		<td>
-				               			<div class="row">
-					               			<div class="col-md-10">[{{product.symbol}}] {{product.name}} {{product.ask}}$</div>
-					               			<button ng-click="product.sold()" type="button" class="btn btn-default">Vendre</button>
-				               			</div>
-				               		</td>
-				               	</tr>
-			               </table>
-		                </div>
+	           <div class="table tablescroll">
+			       <table id="portefeuilleAction" class="table table-hover">
+				       <tr ng-repeat="product in portefeuille | orderBy:'-'">
+				           <td>
+				               <div class="row">
+                                   <div class="col-md-10">[{{product.symbol}}] {{product.name}} {{product.ask}}</div>
+                                   <button ng-click="product.sold()" type="button" class="btn btn-default">Vendre</button>
+                               </div>
+                           </td>
+                       </tr>
+			       </table>
+               </div>
 			</div>
 			<div id="downRight" ng-controller="ArgentController" class="col-md-6">
 				<h2 id="total">Vous avez actuellement {{listeArgent[listeArgent.length-1].somme | number:2}}$</h2>
