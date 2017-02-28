@@ -1,14 +1,14 @@
 body{
-	background-color: #e5e5e5;
+	background-color: #e2e9f1;
 }
 
 .container-fluid{
-	background-color: #e5e5e5;
+	background-color: #e2e9f1;
 }
 
 #total{
 	text-align: center;
-	color: green;
+	color: #3ae071;
 	margin-top: 25%;
 }
 
@@ -21,4 +21,11 @@ body{
 	border-width:1; 
 	overflow-y : scroll;
 	overflow-x: hidden;
+}
+
+.titreCat{
+	background-color: #5bc0de;
+	border-radius: 10px;
+	text-align: center;
+	color: #ffffff;
 }
